@@ -32,4 +32,4 @@ wn_ents = 40943
 
 fb13_ents=75043
 fb13_rels=13
-cat_file='/home/mitarb/kotnis/Code/kge-rl/entity_cat.cpkl'
+cat_file='./entity_cat.cpkl'
