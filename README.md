@@ -14,7 +14,7 @@ This code implements the state-of-the-art Knowledge Graph Embedding [algorithms]
 * An example configuration file (complex.json) can be found in the repository.
 ### Specifications
 * "batch_size": Train Batch Size,
-* "entity_dim": Embedding Dimension (must be specified),
+* "ent_dim": Embedding Dimension (must be specified),
 * "exp_name": Experiment Name,
 * "is_dev": True if you want to test on validation data (must be specified),
 * "is_typed": True if you want to use Type Regularizer (default False),
