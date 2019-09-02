@@ -185,13 +185,13 @@ class Typed_Sampler(Static_Sampler):
             )
         )
         self.ent_index = pickle.load(
-            open(os.path.join(results_dir, constants.entity_ind))
+            open(os.path.join(results_dir, constants.entity_ind), "rb")
         )
         self.ent_cats, self.cat_ents = self.load_cats()
 
     def load_cats(self):
         ent_cats, cat_ents = dict(), dict()
-        all_cats = pickle.load(open(constants.cat_file))
+        all_cats = pickle.load(open(constants.cat_file, "rb"))
         for k, v in all_cats.iteritems():
             ent_cats[self.ent_index[k]] = v
             for c in v:
@@ -280,9 +280,9 @@ class Dynamic_Sampler(Negative_Sampler):
         from models import Rescal
         import torch
 
-        path = "/home/mitarb/kotnis/Data/neg_sampling/wordnet/corrupt/rescal/rescal_100/rescal_params.pt"
+        path = "/home/sch/schoenitzer/nsp/kge-rl/data/FB15k/rescal-random-100/rescal_params.pt"
         model = Rescal(constants.fb15k_ents, constants.fb15k_rels, 100)
-        state_dict = torch.load(path)
+        state_dict = torch.load(path, map_location="cpu")
         model.load_state_dict(state_dict)
         model.eval()
         return model

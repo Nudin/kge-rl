@@ -91,7 +91,7 @@ def train(config, exp_name, data_path, resume=False, tune=False):
     state = None
     if resume or tune:
         params_path = os.path.join(results_dir, "{}_params.pt".format(config["model"]))
-        model.load_state_dict(torch.load(params_path))
+        model.load_state_dict(torch.load(params_path, map_location="cpu"))
     if resume:
         state_path = os.path.join(
             results_dir, "{}_optim_state.pt".format(config["model"])
