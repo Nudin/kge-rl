@@ -20,6 +20,10 @@ class Negative_Sampler(object):
         self.t_filter = self._compute_filter(True)
 
     def batch_sample(self, batch, is_target, num_samples=0):
+        """
+        Get `num_samples` entities for building negative samples for every
+        entities in the batch.
+        """
         batched_negs = [self.sample(ex, is_target, num_samples) for ex in batch]
         return batched_negs
 

@@ -85,23 +85,21 @@ class SGD(object):
             # Refresh
             self.save(self.dump)
             # Only one epoch for Dynamic Samplers
-            if isinstance(self.ns, Dynamic_Sampler) or isinstance(
-                self.ns, Policy_Sampler
-            ):
+            if isinstance(self.ns, [Dynamic_Sampler, Policy_Sampler]):
                 self.dump = False
                 if epoch >= 4:
                     self.halt = True
             if self.halt:
                 return
 
-    def forward(self, batch, volatile, is_target):
+    def forward(self, batch: list, volatile: bool, is_target: bool) -> list:
         negs = self.ns.batch_sample(batch, is_target)
         batch = util.get_triples(batch, negs, is_target, volatile=volatile)
         score = self.model(*batch)
         # return self.logistic(score)
         return self.max_margin(score)
 
-    def fprop(self, batch, volatile=False):
+    def fprop(self, batch: list, volatile=False) -> list:
         return self.forward(batch, volatile, True) + self.forward(
             batch, volatile, False
         )
@@ -126,6 +124,10 @@ class SGD(object):
         return loss / scores.size()[1]
 
     def save(self, dump=False):
+        """
+        Save current parameters and Gradient History to disc, if they are
+        better then the last saved ones.
+        """
         curr_score = self.evaluate(self.dev, self.test_batch_size, True)
         print(
             "Current Score: {}, Previous Score: {}".format(curr_score, self.prev_score)
