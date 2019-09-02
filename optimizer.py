@@ -85,7 +85,7 @@ class SGD(object):
             # Refresh
             self.save(self.dump)
             # Only one epoch for Dynamic Samplers
-            if isinstance(self.ns, [Dynamic_Sampler, Policy_Sampler]):
+            if isinstance(self.ns, (Dynamic_Sampler, Policy_Sampler)):
                 self.dump = False
                 if epoch >= 4:
                     self.halt = True
